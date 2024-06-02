@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Evangelists</title>
+
+    <link rel="stylesheet" href="../static/add_evangelist.css">
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; align-items: center; flex-direction: column; gap: 5vh">
+            <h3 style="color: green; text-align: center;">ADD EVANGELIST</h3>
+            <form action="/evangelist_list" method="post">
+                
+                <div>
+                    <input name="name" type="text" placeholder="full name" style="display: block;">
+                </div>
+
+                <div>
+                    <input type="number" placeholder="age" name="age" style="display: block;">
+                </div>
+
+                <div style="width: 100%;">
+                    <select name="gender" id="">
+                        <option disabled selected>Gender</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                </div>
+
+                <input type="submit" value="ADD" style="color: green; font-weight: bold;">
+
+
+            </form>
+
+            <a href="/evangelist_list">
+                <button style="font-weight: bold; color: white; border-radius: 10px; background-color: green;">SHOW ALL EVANGELISTS</button>
+            </a>
+
+        </div>
+    </div>
+</body>
+</html>
