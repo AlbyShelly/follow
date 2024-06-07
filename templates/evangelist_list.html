@@ -23,9 +23,10 @@
 		<td>{{ res["gender"] }}</td>
 		<td>{{ res["last active"] }}</td>
         <td>
-            <a href="/single_evangelist_work/?id={{res["id"]}}">
-                <button>View Work</button>
-            </a>
+            <form action="/single_evangelist_work" method="get">
+                <input type="hidden" name="id" value="{{res["id"]}}">
+                <input type="submit" value="View Work">
+            </form>
         </td>
 	</tr>
 	{% endfor %}

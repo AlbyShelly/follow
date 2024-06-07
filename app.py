@@ -47,5 +47,4 @@ def evangelist_list():
 
 @app.route("/single_evangelist_work")
 def single_evangelist_work():
-    
-    print(request.args.get("name"))
+    return request.args.get("id")
