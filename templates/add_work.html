@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Work</title>
+
+    <style>
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100vh;
+            background-color: white;
+            flex-direction: column;
+        }
+
+        h3{
+            color: green;
+        }
+
+        input[ type ="text"],input[ type = "number"]{
+            width: 31%
+        }
+
+        input[type="text"]::placeholder{
+            text-align: center;
+        }
+
+        input[type="number"]::placeholder{
+            text-align: center;
+        }
+
+        form{
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex-direction: column;
+            padding: 5px;
+        }
+
+        button{
+            color: white;
+            background-color: green;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .form_elements{
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container" >
+        <h3>ADD NEW WORK</h3>
+        <form action="" id="myform">
+            <div class="form_elements">
+                <button id="add_field" onclick=addfield()>+</button>
+            </div>
+            <div class="form_elements">
+                <input type="text" name="name" placeholder="name">
+                <input type="number" name="age" placeholder="age">
+                <input type="text" name="address" placeholder="address">
+            </div>
+        </form>
+    </div> 
+    
+    <script>
+
+        let btn = document.getElementById("add_field");
+        console.log(btn);
+
+        let divElement = document.createElement("div");
+        divElement.innerHTML = `
+                <input type="text" name="name" placeholder="name">
+                <input type="number" name="age" placeholder="age">
+                <input type="text" name="address" placeholder="address">
+        `
+        console.log(divElement);
+        divElement.classList.add("form_elements");
+
+        foo = document.getElementById("myform");
+        console.log(foo);
+        
+        function addfield(){
+            foo.appendChild(divElement);
+            console.log(foo);
+        }
+
+    </script>
+</body>
+</html>
