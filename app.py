@@ -48,3 +48,43 @@ def evangelist_list():
 @app.route("/single_evangelist_work")
 def single_evangelist_work():
     return request.args.get("id")
+
+
+@app.route("/new_work", methods=["GET", "POST"])
+def new_work():
+
+    if request.method == "POST":
+        
+        #list to hold our values
+        work_list = []
+        
+        #loop to get all the data till end
+        i = 0 #a counter variable                
+        while True:
+
+            if f'name_{i}' in request.form:
+            
+                currdict = {}
+                currdict[f'name_{i}'] = request.form.get(f'name_{i}')
+                currdict[f'age_{i}'] = request.form.get(f'age_{i}')
+                currdict[f'address_{i}'] = request.form.get(f'address_{i}')
+
+                #validate user input
+                for _ in currdict.keys():
+                    if not currdict[_]:
+                        return "all the fields should be filled"
+
+                i += 1
+
+                print(currdict)
+            else :
+                break
+
+        return "logged to terminal"
+
+    else:
+        
+        #get the evangelist names and ids
+        evangelists = db.execute(""" SELECT "id","name" FROM "evangelists" """)
+        print(evangelists)
+        return render_template("new_work.html", evangelists=evangelists)

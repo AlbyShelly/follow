@@ -40,7 +40,7 @@
             padding: 5px;
         }
 
-        button{
+        button, input[ type = "submit"]{
             color: white;
             background-color: green;
             font-weight: bold;
@@ -63,39 +63,63 @@
 <body>
     <div class="container" >
         <h3>ADD NEW WORK</h3>
-        <form action="" id="myform">
+        <form action="" id="myform" method="post">
+
             <div class="form_elements">
-                <button id="add_field" onclick=addfield()>+</button>
+                <select name="evangelist_id">
+                    <option value="" selected disabled>Choose evangelist</option>
+                    {% for _ in evangelists %}
+                        <option value="{{ _['id'] }}">{{ _["name"] }}</option>
+                        
+                    {% endfor %} 
+                    <!-- {% for evangelist in evangelists %}
+                    <option value="{{ evangelist['id'] }}">{{ evangelist['name'] }}</option>
+                    {% endfor %} -->
+                </select>
+                
+            
             </div>
+
             <div class="form_elements">
-                <input type="text" name="name" placeholder="name">
-                <input type="number" name="age" placeholder="age">
-                <input type="text" name="address" placeholder="address">
+                <input type="text" name="name_0" placeholder="name">
+                <input type="number" name="age_0" placeholder="age">
+                <input type="text" name="address_0" placeholder="address">
+            </div>
+
+            <div style="order: 1;margin-left: auto;" class="form_elements" >
+                <button id="add_field"  type="button" onclick=addfield()>+</button>
+            </div>
+
+            <div style="order: 1;">
+                <input type="submit" value="DONE">
             </div>
         </form>
     </div> 
     
     <script>
 
+        let form_count = 0;
         let btn = document.getElementById("add_field");
         console.log(btn);
-
-        let divElement = document.createElement("div");
-        divElement.innerHTML = `
-                <input type="text" name="name" placeholder="name">
-                <input type="number" name="age" placeholder="age">
-                <input type="text" name="address" placeholder="address">
-        `
-        console.log(divElement);
-        divElement.classList.add("form_elements");
 
         foo = document.getElementById("myform");
         console.log(foo);
         
         function addfield(){
-            foo.appendChild(divElement);
+
+            let divElement = document.createElement("div");
+            form_count+= 1;
+            divElement.innerHTML = `
+                <input type="text" name="name_${form_count}" placeholder="name">
+                <input type="number" name="age_${form_count}" placeholder="age">
+                <input type="text" name="address_${form_count}" placeholder="address">
+            `
+            divElement.classList.add("form_elements");
             console.log(foo);
+            foo.appendChild(divElement);
         }
+
+
 
     </script>
 </body>
