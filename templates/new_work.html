@@ -67,14 +67,12 @@
 
             <div class="form_elements">
                 <select name="evangelist_id">
-                    <option value="" selected disabled>Choose evangelist</option>
-                    {% for _ in evangelists %}
-                        <option value="{{ _['id'] }}">{{ _["name"] }}</option>
-                        
-                    {% endfor %} 
-                    <!-- {% for evangelist in evangelists %}
+                    <option value="" selected disabled>Choose evangelist</option> 
+                    
+                    {% for evangelist in evangelists %}
                     <option value="{{ evangelist['id'] }}">{{ evangelist['name'] }}</option>
-                    {% endfor %} -->
+                    {% endfor %}
+                    
                 </select>
                 
             
