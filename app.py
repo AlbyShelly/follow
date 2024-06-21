@@ -30,8 +30,7 @@ def evangelist():
         #recording the input
         result = db.execute("""INSERT INTO "evangelists"("name", "age", "gender")
                              VALUES (?, ?, ?)""", name, age, gender)
-        print(result)
-
+        
         return redirect("/evangelist_list")
 
     else:
@@ -42,12 +41,24 @@ def evangelist():
 def evangelist_list():
     
     result = db.execute("SELECT * FROM evangelists")
-
     return render_template("evangelist_list.html", result=result)
 
 @app.route("/single_evangelist_work")
 def single_evangelist_work():
-    return request.args.get("id")
+
+    #get evangelist id and contacts list
+    evangelist_id = request.args.get("id")
+    contacts = db.execute(""" SELECT "name", "age", "gender", "address", "last_contacted"
+                              FROM "contacts"
+                              WHERE "id" IN(
+                                SELECT "contact_id" FROM "follow"
+                                WHERE "evangelist_id" = ?
+                              )
+               """,evangelist_id
+    )
+    evangelist_name = db.execute("""SELECT "name" FROM "evangelists" WHERE "id" = ?""",evangelist_id)[0]["name"]
+    print(evangelist_name)
+    return render_template("single_evangelist_work.html", contacts = contacts, evangelist_name = evangelist_name)
 
 
 @app.route("/new_work", methods=["GET", "POST"])
@@ -58,33 +69,49 @@ def new_work():
         #list to hold our values
         work_list = []
         
+        #get evangelist_id
+        evangelist_id = request.form.get("evangelist_id")
+
         #loop to get all the data till end
-        i = 0 #a counter variable                
+        i = 0 #a counter variable               
         while True:
 
             if f'name_{i}' in request.form:
             
                 currdict = {}
-                currdict[f'name_{i}'] = request.form.get(f'name_{i}')
-                currdict[f'age_{i}'] = request.form.get(f'age_{i}')
-                currdict[f'address_{i}'] = request.form.get(f'address_{i}')
+                currdict["name"] = request.form.get(f'name_{i}')
+                currdict["age"] = request.form.get(f'age_{i}')
+                currdict["address"] = request.form.get(f'address_{i}')
+                currdict["gender"] = request.form.get(f'gender_{i}')
 
                 #validate user input
+
+                if not evangelist_id:
+                    return "please choose and evangelist to continue"
+
                 for _ in currdict.keys():
                     if not currdict[_]:
                         return "all the fields should be filled"
 
                 i += 1
 
-                print(currdict)
+                work_list.append(currdict)
             else :
                 break
 
-        return "logged to terminal"
+
+        #insert the data to database
+        for row in work_list:
+            db.execute("INSERT INTO contacts (name, age, address, gender) VALUES (?,?,?,?)",
+                       row["name"], row["age"], row["address"],row["gender"])
+
+            contact_id = db.execute(""" SELECT "seq" FROM "sqlite_sequence" WHERE "name" = 'contacts'""")[0]["seq"]
+            result = db.execute(""" INSERT INTO "follow" ("evangelist_id", "contact_id") VALUES (?,?)""", evangelist_id, contact_id)
+            print(result)
+        return redirect("/evangelist_list")
 
     else:
         
         #get the evangelist names and ids
         evangelists = db.execute(""" SELECT "id","name" FROM "evangelists" """)
-        print(evangelists)
         return render_template("new_work.html", evangelists=evangelists)

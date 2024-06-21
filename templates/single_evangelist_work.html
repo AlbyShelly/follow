@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evangelist Work</title>
+    <style>
+        th,td{
+            text-align: center;
+            padding: 5px;
+            border: solid green 3px;
+            background-color: white;
+        }
+
+        table{
+            border: solid green 3px;
+            background-color: green;
+        }
+    </style>
+</head>
+<body style="width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+
+    <h3>{{ evangelist_name }}</h3>
+    <table>
+        <tr>
+            <th>NAME</th>
+            <th>AGE</th>
+            <th>GENDER</th>
+            <th>ADDRESS</th>
+            <th>LASTCONNECT</th>
+        </tr>
+
+	{% for contact in contacts %}
+	<tr>
+		<td>{{ contact["name"] }}</td>
+		<td>{{ contact["age"] }}</td>
+        <td>{{ contact["gender"] }}</td>
+        <td>{{ contact["address"] }}</td>
+        <td>{{ contact["last_contacted"] }}</td>
+        
+	</tr>
+	{% endfor %}
+    </table>
+</body>
+</html>
