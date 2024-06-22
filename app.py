@@ -40,7 +40,7 @@ def evangelist():
 @app.route("/evangelist_list")
 def evangelist_list():
     
-    result = db.execute("SELECT * FROM evangelists")
+    result = db.execute("SELECT * FROM evangelists ORDER BY last_active")
     return render_template("evangelist_list.html", result=result)
 
 @app.route("/single_evangelist_work")
@@ -54,6 +54,7 @@ def single_evangelist_work():
                                 SELECT "contact_id" FROM "follow"
                                 WHERE "evangelist_id" = ?
                               )
+                              ORDER BY "last_contacted"
                """,evangelist_id
     )
     evangelist_name = db.execute("""SELECT "name" FROM "evangelists" WHERE "id" = ?""",evangelist_id)[0]["name"]
