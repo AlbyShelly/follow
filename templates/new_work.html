@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Work</title>
-
-    <style>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <style>
         .container{
             display: flex;
             align-items: center;
@@ -64,55 +65,72 @@
 
 
 
-    </style>
+    </style> -->
 </head>
 
 <body>
-    <div class="container" >
-        <h3>ADD NEW WORK</h3>
-        <form action="" id="myform" method="post">
-
-            <div class="form_elements">
-                <select name="evangelist_id">
-                    <option value="" selected disabled>Choose evangelist</option> 
-                    
-                    {% for evangelist in evangelists %}
-                    <option value="{{ evangelist['id'] }}">{{ evangelist['name'] }}</option>
-                    {% endfor %}
-
-                </select>
-                
-            
-            </div>
-
-            <div class="form_elements">
-                <input type="text" name="name_0" placeholder="name">
-                <input type="number" name="age_0" placeholder="age">
-                <input type="text" name="address_0" placeholder="address">
-                <select name="gender_0">
-                    <option disabled selected>Gender</option>
-                    <option value="M">Male</option>
-                    <option value="F">Female</option>
-                </select>
-            </div>
-
-            <div style="order: 1;margin-left: auto;" class="form_elements" >
-                <button id="add_field"  type="button" onclick=addfield()>+</button>
-            </div>
-
-            <div style="order: 1;">
-                <input type="submit" value="DONE">
-            </div>
-        </form>
-    </div> 
     
+    <div class="container d-flex flex-column justify-content-center align-items-center">
+        
+        <h2 class="text-success text-center font-weight-bold">ADD NEW WORK</h2>
+
+        <form class="w-75" method="post">
+            <div>
+                <div class="form-group">
+                    <select name="evangelist_id" id="" class="custom-select">
+                        <option value="" selected disabled>Select Evangelist</option>
+                        
+                        {% for evangelist in evangelists %}
+                        <option value="{{ evangelist['id'] }}">{{ evangelist['name'] }}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+            </div>
+            <div id="contact_details" class="p-1">
+                <div class="border border-success rounded p-1">
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input type="text" name="name_0" class="form-control" id="" placeholder="Full name">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="number" name="age_0" class="form-control" id="" placeholder="Age">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input type="text" name="address_0" class="form-control" id="" placeholder="Address">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <select name="gender_0" id="" class="custom-select">
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="" selected disabled>Gender</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-1 order-1 justify-content-end d-flex flex-row" onclick="addfield()">
+                <button type="button" class="btn text-success btn-sm p-1 font-weight-bold">+</button>
+            </div>
+            
+
+            <div class="order-1 mb-1">
+                <button type="submit" class="btn btn-success btn-sm btn-block font-weight-bold">Add</button>
+            </div>
+        </form>     
+    </div>
     <script>
 
         let form_count = 0;
         let btn = document.getElementById("add_field");
         console.log(btn);
 
-        foo = document.getElementById("myform");
+        foo = document.getElementById("contact_details");
         console.log(foo);
         
         function addfield(){
@@ -120,22 +138,40 @@
             let divElement = document.createElement("div");
             form_count+= 1;
             divElement.innerHTML = `
-                <input type="text" name="name_${form_count}" placeholder="name">
-                <input type="number" name="age_${form_count}" placeholder="age">
-                <input type="text" name="address_${form_count}" placeholder="address">
-                <select name="gender_${form_count}">
-                    <option disabled selected>Gender</option>
-                    <option value="M">Male</option>
-                    <option value="F">Female</option>
-                </select>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="text" name="name_${form_count}" class="form-control" id="" placeholder="Full name">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="number" name="age_${form_count}" class="form-control" id="" placeholder="Age">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="text" name="address_${form_count}" class="form-control" id="" placeholder="Address">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <select name="gender_${form_count}" id="" class="custom-select">
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                            <option value="" selected disabled>Gender</option>
+                        </select>
+                    </div>
+                </div>
             `
-            divElement.classList.add("form_elements");
             console.log(foo);
+            divElement.classList.add('border', 'border-success', 'rounded', 'p-1', 'mt-1')
             foo.appendChild(divElement);
         }
 
 
 
     </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
