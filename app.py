@@ -40,7 +40,7 @@ def evangelist():
 @app.route("/evangelist_list")
 def evangelist_list():
     
-    result = db.execute("SELECT * FROM evangelists ORDER BY last_active")
+    result = db.execute("SELECT * FROM evangelists ORDER BY last_active DESC")
     return render_template("evangelist_list.html", result=result)
 
 @app.route("/single_evangelist_work")
@@ -54,7 +54,7 @@ def single_evangelist_work():
                                 SELECT "contact_id" FROM "follow"
                                 WHERE "evangelist_id" = ?
                               )
-                              ORDER BY "last_contacted"
+                              ORDER BY "last_contacted" DESC
                """,evangelist_id
     )
     evangelist_name = db.execute("""SELECT "name" FROM "evangelists" WHERE "id" = ?""",evangelist_id)[0]["name"]
@@ -121,12 +121,13 @@ def new_work():
 def current_status():
     
     #query to get all the important details
-    rows =db.execute( """   SELECT "ename", "name" AS "cname", "age" AS "cage", "address", "last_contacted", "cid"
+    rows =db.execute( """   SELECT "eid", "ename", "name" AS "cname", "age" AS "cage", "address", "last_contacted", "cid"
                             FROM "contacts" JOIN
 	                            (SELECT "evangelists"."id" AS "eid", "evangelists"."name" AS "ename", "contact_id" AS "cid"
 	                            FROM "evangelists" JOIN "follow"
             	                ON "evangelists"."id" = "follow"."evangelist_id") AS "t1"
-                            ON "contacts"."id" = "t1"."cid" 
+                            ON "contacts"."id" = "t1"."cid"
+                            ORDER BY "last_contacted" DESC 
           """
     )
     
